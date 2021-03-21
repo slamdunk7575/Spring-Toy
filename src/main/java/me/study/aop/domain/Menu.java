@@ -1,12 +1,8 @@
 package me.study.aop.domain;
 
-import lombok.Builder;
-
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
+import javax.persistence.*;
 import java.math.BigDecimal;
+import java.util.Objects;
 
 @Entity
 public class Menu {
@@ -18,16 +14,22 @@ public class Menu {
     @Column(name = "name", nullable = false)
     private String name;
 
-    private BigDecimal price = BigDecimal.ZERO;
+    @Embedded
+    private Price price;
 
-    private Menu() {
+    protected Menu() {
     }
 
-    @Builder
-    public Menu(Long id, String name, BigDecimal price) {
-        this.id = id;
+    public Menu(String name, BigDecimal price) {
+        validateName(name);
         this.name = name;
-        this.price = price;
+        this.price = new Price(price);
+    }
+
+    private void validateName(String name) {
+        if(Objects.isNull(name)) {
+            throw new IllegalArgumentException("메뉴 이름은 필수 정보입니다.");
+        }
     }
 
     public Long getId() {
@@ -39,6 +41,6 @@ public class Menu {
     }
 
     public BigDecimal getPrice() {
-        return price;
+        return price.value();
     }
 }
