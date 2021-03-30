@@ -1,5 +1,6 @@
 package me.study.aop.application;
 
+import me.study.aop.common.ExecutionTime;
 import me.study.aop.domain.Menu;
 import me.study.aop.dto.MenuRequest;
 import me.study.aop.dto.MenuResponse;
@@ -18,14 +19,18 @@ public class MenuService {
         this.menuRepository = menuRepository;
     }
 
+    @ExecutionTime
     @Transactional
-    public MenuResponse create(final MenuRequest menuRequest) {
+    public MenuResponse createMenu(final MenuRequest menuRequest) {
         Menu menu = menuRequest.toMenu();
-        return MenuResponse.of(menuRepository.save(menu));
+        Menu savedMenu = menuRepository.save(menu);
+        return MenuResponse.of(savedMenu);
     }
 
-    public List<MenuResponse> findAll() {
-        return MenuResponse.ofList(menuRepository.findAll());
+    @ExecutionTime
+    public List<MenuResponse> getMenus() {
+        List<Menu> menus = menuRepository.findAll();
+        return MenuResponse.ofList(menus);
     }
 
 }
