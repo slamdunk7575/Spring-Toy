@@ -28,7 +28,7 @@ class MenuServiceTest {
         MenuRequest menuRequest = new MenuRequest("아이스 아메리카노", new BigDecimal(4000));
 
         // when
-        MenuResponse menuResponse = menuService.create(menuRequest);
+        MenuResponse menuResponse = menuService.createMenu(menuRequest);
 
         // then
         assertThat(menuResponse.getId()).isNotNull();
@@ -41,7 +41,7 @@ class MenuServiceTest {
     void require_price() {
         // when & then
         assertThatExceptionOfType(IllegalArgumentException.class).isThrownBy(() -> {
-            menuService.create(new MenuRequest("아이스 까페라떼", null));
+            menuService.createMenu(new MenuRequest("아이스 까페라떼", null));
         }).withMessageMatching("가격은 0원 이상이어야 합니다.");
     }
 
@@ -50,7 +50,7 @@ class MenuServiceTest {
     void price_not_zero() {
         // when & then
         assertThatExceptionOfType(IllegalArgumentException.class).isThrownBy(() -> {
-            menuService.create(new MenuRequest("아이스 까페라떼", BigDecimal.valueOf(-1000)));
+            menuService.createMenu(new MenuRequest("아이스 까페라떼", BigDecimal.valueOf(-1000)));
         }).withMessageMatching("가격은 0원 이상이어야 합니다.");
 
     }
@@ -60,10 +60,10 @@ class MenuServiceTest {
     void find_all_menus() {
         // given
         MenuRequest menuRequest = new MenuRequest("아이스 아메리카노", new BigDecimal(4000));
-        MenuResponse menuResponse = menuService.create(menuRequest);
+        MenuResponse menuResponse = menuService.createMenu(menuRequest);
 
         // when
-        List<MenuResponse> results = menuService.findAll();
+        List<MenuResponse> results = menuService.getMenus();
 
         // then
         assertThat(results).isNotEmpty();
