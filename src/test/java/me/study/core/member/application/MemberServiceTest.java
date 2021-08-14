@@ -1,7 +1,9 @@
 package me.study.core.member.application;
 
+import me.study.core.config.AppConfig;
 import me.study.core.member.domain.Grade;
 import me.study.core.member.domain.Member;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
@@ -9,7 +11,13 @@ import static org.assertj.core.api.Assertions.assertThat;
 
 class MemberServiceTest {
 
-    private MemberService memberService = new MemberServiceImpl();
+    private MemberService memberService;
+
+    @BeforeEach
+    void setUp() {
+        AppConfig appConfig = new AppConfig();
+        memberService = appConfig.memberService();
+    }
 
     @DisplayName("회원가입을 할 수 있다.")
     @Test
