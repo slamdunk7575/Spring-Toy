@@ -1,16 +1,19 @@
 package me.study.core.order.application;
 
-import me.study.core.discount.RateDiscountPolicy;
 import me.study.core.member.dao.MemberRepository;
-import me.study.core.member.dao.MemoryMemberRepository;
 import me.study.core.discount.DiscountPolicy;
 import me.study.core.member.domain.Member;
 import me.study.core.order.domain.Order;
 
 public class OrderServiceImpl implements OrderService {
 
-    private MemberRepository memberRepository = new MemoryMemberRepository();
-    // private DiscountPolicy discountPolicy = new FixDiscountPolicy();
+    private final MemberRepository memberRepository;
+    private final DiscountPolicy discountPolicy;
+
+    public OrderServiceImpl(MemberRepository memberRepository, DiscountPolicy discountPolicy) {
+        this.memberRepository = memberRepository;
+        this.discountPolicy = discountPolicy;
+    }
 
     /**
      * 요구사항 변경에 따라 할인 정책을 RateDiscountPolicy 로 바꾼다면
@@ -33,7 +36,6 @@ public class OrderServiceImpl implements OrderService {
      * 누군가 클라이언트(OrderServiceImpl)에 DiscountPolicy의 구현 객체를 대신 생성해서 주입해줘야 한다.
      *
      */
-    private DiscountPolicy discountPolicy = new RateDiscountPolicy();
 
     @Override
     public Order createOrder(Long memberId, String itemName, int itemPrice) {
