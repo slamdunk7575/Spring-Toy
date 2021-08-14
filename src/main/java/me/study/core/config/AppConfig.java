@@ -1,7 +1,7 @@
 package me.study.core.config;
 
 import me.study.core.discount.DiscountPolicy;
-import me.study.core.discount.FixDiscountPolicy;
+import me.study.core.discount.RateDiscountPolicy;
 import me.study.core.member.application.MemberService;
 import me.study.core.member.application.MemberServiceImpl;
 import me.study.core.member.dao.MemberRepository;
@@ -41,8 +41,16 @@ public class AppConfig {
         return new OrderServiceImpl(memberRepository(), discountPolicy());
     }
 
+    /**
+     * AppConfig의 등장으로 애플리케이션이 크게 사용 영역과 객체를 생성하고 구성하는 영역(Configuration)으로 분리됬다.
+     *
+     * - 클라이언트(예: OrderServiceImpl)객체는 추상에 의존하고 구체화는 전혀 모른다. (DIP 만족)
+     * - 예: 할인 정책을 FixDiscountPolicy -> RateDiscountPolicy 로 변경한다고 했을때
+     * 애플리케이션의 구성 역할을 담당하는 AppConfig만 수정하면 된다. (OCP 만족)
+     */
     private DiscountPolicy discountPolicy() {
-        return new FixDiscountPolicy();
+        // return new FixDiscountPolicy();
+        return new RateDiscountPolicy();
     }
 
 
