@@ -8,7 +8,10 @@ import me.study.core.member.dao.MemberRepository;
 import me.study.core.member.dao.MemoryMemberRepository;
 import me.study.core.order.application.OrderService;
 import me.study.core.order.application.OrderServiceImpl;
+import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.Configuration;
 
+@Configuration
 public class AppConfig {
 
     /**
@@ -21,6 +24,7 @@ public class AppConfig {
      * - AppConfig는 구체 클래스를 선택한다. 애플리케이션 동작의 전체 구성을 책임진다.
      * - 이제 클라이언트(예: OrderServiceImpl)객체는 기능을 실행하는 책임만 수행하면 된다. (SRP 만족)
      */
+    @Bean
     public MemberService memberService() {
         return new MemberServiceImpl(memberRepository());
     }
@@ -33,10 +37,12 @@ public class AppConfig {
      * 애플리케이션 전체 구성이 어떻게 되어있는지 확인할 수 있다.
      * 현재는 예: MemoryMemberRepository를 사용하지만 나중에 변경을 한다면 memberRepository() 만 변경하면 된다.
      */
-    private MemberRepository memberRepository() {
+    @Bean
+    public MemberRepository memberRepository() {
         return new MemoryMemberRepository();
     }
 
+    @Bean
     public OrderService orderService() {
         return new OrderServiceImpl(memberRepository(), discountPolicy());
     }
@@ -49,10 +55,10 @@ public class AppConfig {
      * - 예: 할인 정책을 FixDiscountPolicy -> RateDiscountPolicy 로 변경한다고 했을때
      * 애플리케이션의 구성 역할을 담당하는 AppConfig만 수정하면 된다. (OCP 만족)
      */
-    private DiscountPolicy discountPolicy() {
+    @Bean
+    public DiscountPolicy discountPolicy() {
         // return new FixDiscountPolicy();
         return new RateDiscountPolicy();
     }
-
 
 }
