@@ -29,6 +29,12 @@ public class MemberApp {
          * 기존에 개발자가 직접 자바코드로 모든 것을 했다면 이제부터는 스프링 컨테이너에 객체를 스프링 빈으로 등록하고 스프링 컨테이너에서
          * 스프링 빈을 찾아서 사용하도록 변경하였다.
          *
+         * ...
+         * Creating shared instance of singleton bean 'memberService'
+         * Creating shared instance of singleton bean 'memberRepository'
+         * Creating shared instance of singleton bean 'orderService'
+         * Creating shared instance of singleton bean 'discountPolicy'
+         *
          * Q. 코드가 약간 더 복잡해진거 같은데 스프링 컨테이너를 사용하면 어떤 장점이 있을까?
          */
         ApplicationContext ac = new AnnotationConfigApplicationContext(AppConfig.class);
