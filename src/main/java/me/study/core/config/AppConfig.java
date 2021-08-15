@@ -19,7 +19,7 @@ public class AppConfig {
      * 해결: 구현 객체를 생성하고 연결하는 책임을 가지는 별도의 설정 클래스를 만들자!
      * - AppConfig를 통해서 관심사를 분리
      * - AppConfig는 구체 클래스를 선택한다. 애플리케이션 동작의 전체 구성을 책임진다.
-     * - 이제 클라이언트(예: OrderServiceImpl)객체는 기능을 실행하는 책임만 수행하면 된다.
+     * - 이제 클라이언트(예: OrderServiceImpl)객체는 기능을 실행하는 책임만 수행하면 된다. (SRP 만족)
      */
     public MemberService memberService() {
         return new MemberServiceImpl(memberRepository());
@@ -45,6 +45,7 @@ public class AppConfig {
      * AppConfig의 등장으로 애플리케이션이 크게 사용 영역과 객체를 생성하고 구성하는 영역(Configuration)으로 분리됬다.
      *
      * - 클라이언트(예: OrderServiceImpl)객체는 추상에 의존하고 구체화는 전혀 모른다. (DIP 만족)
+     *
      * - 예: 할인 정책을 FixDiscountPolicy -> RateDiscountPolicy 로 변경한다고 했을때
      * 애플리케이션의 구성 역할을 담당하는 AppConfig만 수정하면 된다. (OCP 만족)
      */
